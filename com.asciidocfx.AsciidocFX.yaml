@@ -1,0 +1,22 @@
+app-id: com.asciidocfx.AsciidocFX
+command: AsciidocFX
+finish-args:
+    - --device=dri          # OpenGL rendering
+    - --filesystem=host     # don't have portals yet
+    - --share=ipc           # necessary for X11
+    - --share=network       # serve HTTP
+    - --socket=fallback-x11 # show windows using X11, if Wayland is not available
+    - --socket=wayland
+modules:
+    - name: AsciidocFX
+      build-commands:
+        - mkdir --parents /app/bin
+        - find -mindepth 1 -maxdepth 1 -exec cp --recursive --target-directory /app/bin {} +
+      buildsystem: simple
+      sources:
+          url: https://github.com/asciidocfx/AsciidocFX/releases/download/v1.7.3/AsciidocFX_Linux.tar.gz
+          sha256: 4132081e3989cbde53842ff47eef488e22eb25e56bb4f885a68a1c33e6999cb8
+          type: archive
+runtime: org.freedesktop.Platform
+runtime-version: 19.08
+sdk: org.freedesktop.Sdk
